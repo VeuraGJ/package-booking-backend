@@ -15,6 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,11 +36,12 @@ public class PackageInformationServiceImplTest {
      private PackageInformationService packageInformationService;
      @MockBean
      private PackageInformationRepository packageInformationRepository;
+    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
      @Test
      public void should_return_all_Packages_when_call_find_all_function(){
          List<PackageInformation> packageInformations = new ArrayList<PackageInformation>();
-         packageInformations.add(new PackageInformation("lajods",578687897,0,new Date()));
-         packageInformations.add(new PackageInformation("las",578687897,0,new Date()));
+         packageInformations.add(new PackageInformation("lajods",578687897,0,simpleDateFormat.format(new Date())));
+         packageInformations.add(new PackageInformation("las",578687897,0,simpleDateFormat.format(new Date())));
          Mockito.when(packageInformationRepository.findAll()).thenReturn(packageInformations);
          List<PackageInformation> loadPackageInformations = packageInformationService.findAllPackages();
          Assertions.assertEquals(packageInformations,loadPackageInformations);
@@ -47,9 +49,9 @@ public class PackageInformationServiceImplTest {
     @Test
     public void should_return_specific_status_Packages_when_call_find_all_by_status_function(){
         List<PackageInformation> packageInformations = new ArrayList<PackageInformation>();
-        packageInformations.add(new PackageInformation("lajods",578687897,0,new Date()));
-        packageInformations.add(new PackageInformation("las",578687897,1,new Date()));
-        packageInformations.add(new PackageInformation("loop",578687897,1,new Date()));
+        packageInformations.add(new PackageInformation("lajods",578687897,0,simpleDateFormat.format(new Date())));
+        packageInformations.add(new PackageInformation("las",578687897,1,simpleDateFormat.format(new Date())));
+        packageInformations.add(new PackageInformation("loop",578687897,1,simpleDateFormat.format(new Date())));
         List<PackageInformation> exceptedPackages = packageInformations.stream()
                                                     .filter(packageInformation -> packageInformation.getStatus() ==1)
                                                     .collect(Collectors.toList());
@@ -59,7 +61,7 @@ public class PackageInformationServiceImplTest {
     }
     @Test
     public void should_return_update_status_Packages_when_call_find_all_by_status_function(){
-        PackageInformation packageInformation = new PackageInformation("lajods",578687897,0,new Date());
+        PackageInformation packageInformation = new PackageInformation("lajods",578687897,0,simpleDateFormat.format(new Date()));
         packageInformation.setId(1);
         Mockito.when(packageInformationRepository.findById(packageInformation.getId())).thenReturn(java.util.Optional.of(packageInformation));
         packageInformation.setStatus(1);

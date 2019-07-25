@@ -11,13 +11,12 @@ public class PackageInformation {
     private String cutomerName;
     private long telphoneNumber;
     private int status;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date orderTime;
+    private String orderTime;
 
     public PackageInformation() {
     }
 
-    public PackageInformation(String cutomerName, long telphoneNumber, int status, Date orderTime) {
+    public PackageInformation(String cutomerName, long telphoneNumber, int status, String orderTime) {
         this.cutomerName = cutomerName;
         this.telphoneNumber = telphoneNumber;
         this.status = status;
@@ -56,11 +55,11 @@ public class PackageInformation {
         this.status = status;
     }
 
-    public Date getOrderTime() {
+    public String getOrderTime() {
         return orderTime;
     }
 
-    public void setOrderTime(Date orderTime) {
+    public void setOrderTime(String orderTime) {
         this.orderTime = orderTime;
     }
 }
