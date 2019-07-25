@@ -19,11 +19,24 @@ public class PackageInformationController {
             return ResponseEntity.ok(packageInformationService.findAllPackagesByStatus(status));
         }
     }
-    @PutMapping("/packages/{id}")
-    public ResponseEntity updatePackageStatus(@PathVariable long id, @RequestBody PackageInformation packageInformation){
+    @PutMapping(value = "/packages/{id}",params = {"status"})
+    public ResponseEntity updatePackageStatus(@PathVariable long id, @RequestParam int status){
+        PackageInformation packageInformation = new PackageInformation();
         packageInformation.setId(id);
+        packageInformation.setStatus(status);
         if(packageInformationService.updatePackageStatus(packageInformation)!=null){
             return ResponseEntity.ok(packageInformationService.updatePackageStatus(packageInformation));
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @PutMapping(value = "/packages/{id}", params = {"orderTime"})
+    public ResponseEntity updatePackageOrderTime(@PathVariable long id, @RequestParam String orderTime){
+        PackageInformation packageInformation = new PackageInformation();
+        packageInformation.setId(id);
+        packageInformation.setOrderTime(orderTime);
+        if(packageInformationService.updatePackageOrderTime(packageInformation)!=null){
+            return ResponseEntity.ok(packageInformationService.updatePackageOrderTime(packageInformation));
         }else{
             return ResponseEntity.notFound().build();
         }

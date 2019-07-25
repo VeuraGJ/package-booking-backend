@@ -73,4 +73,16 @@ public class PackageInformationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value(1));
     }
+    @Test
+    public void should_return_package_with_order_time_when_call_put_to_order_package_time_api() throws Exception {
+        Gson gson = new Gson();
+        PackageInformation packageInformation =new PackageInformation("lajods",578687897,0,
+                simpleDateFormat.format(new Date()));
+        packageInformation.setId(1);
+        packageInformation.setOrderTime("2019-06-06 10:56:00");
+        given(packageInformationService.updatePackageOrderTime(any(PackageInformation.class))).willReturn(packageInformation);
+        mockMvc.perform(put("/packages/1").contentType(MediaType.APPLICATION_JSON).content(gson.toJson(packageInformation)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.orderTime").value("2019-06-06 10:56:00"));
+    }
 }
