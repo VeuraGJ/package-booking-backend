@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -38,4 +40,18 @@ public class PackageInformationControllerTest {
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.length()").value(2));
    }
+    @Test
+    public void should_return_specific_status_packages_when_call_get_with_status_api() throws Exception {
+        List<PackageInformation> packageInformations = new ArrayList<PackageInformation>();
+        packageInformations.add(new PackageInformation("lajods",578687897,0,new Date()));
+        packageInformations.add(new PackageInformation("las",578687897,1,new Date()));
+        packageInformations.add(new PackageInformation("loop",578687897,1,new Date()));
+        List<PackageInformation> exceptedPackages = packageInformations.stream()
+                .filter(packageInformation -> packageInformation.getStatus() ==1)
+                .collect(Collectors.toList());
+        given(packageInformationService.findAllPackagesByStatus(anyInt())).willReturn(exceptedPackages);
+        mockMvc.perform(get("/packages?status=1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(2));
+    }
 }
