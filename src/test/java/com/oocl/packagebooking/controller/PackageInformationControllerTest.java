@@ -42,25 +42,11 @@ public class PackageInformationControllerTest {
        List<PackageInformation> packageInformations = new ArrayList<PackageInformation>();
        packageInformations.add(new PackageInformation("lajods",578687897,0,simpleDateFormat.format(new Date())));
        packageInformations.add(new PackageInformation("las",578687897,0,simpleDateFormat.format(new Date())));
-       given(packageInformationService.findAllPackages()).willReturn(packageInformations);
+       given(packageInformationService.findAllPackages(anyInt())).willReturn(packageInformations);
        mockMvc.perform(get("/packages"))
                .andExpect(status().isOk())
                .andExpect(jsonPath("$.length()").value(2));
    }
-    @Test
-    public void should_return_specific_status_packages_when_call_get_with_status_api() throws Exception {
-        List<PackageInformation> packageInformations = new ArrayList<PackageInformation>();
-        packageInformations.add(new PackageInformation("lajods",578687897,0,simpleDateFormat.format(new Date())));
-        packageInformations.add(new PackageInformation("las",578687897,1,simpleDateFormat.format(new Date())));
-        packageInformations.add(new PackageInformation("loop",578687897,1,simpleDateFormat.format(new Date())));
-        List<PackageInformation> exceptedPackages = packageInformations.stream()
-                .filter(packageInformation -> packageInformation.getStatus() ==1)
-                .collect(Collectors.toList());
-        given(packageInformationService.findAllPackagesByStatus(anyInt())).willReturn(exceptedPackages);
-        mockMvc.perform(get("/packages?status=1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2));
-    }
     @Test
     public void should_return_update_status_packages_when_call_put_api() throws Exception {
         Gson gson = new Gson();

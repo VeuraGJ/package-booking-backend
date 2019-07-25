@@ -14,11 +14,9 @@ public class PackageInformationController {
     private PackageInformationService packageInformationService;
     @GetMapping("/packages")
     public ResponseEntity getAllPackages(@RequestParam(name ="status",defaultValue = "-1")int status){
-        if(status == -1) {
-            return ResponseEntity.ok(packageInformationService.findAllPackages());
-        }else{
-            return ResponseEntity.ok(packageInformationService.findAllPackagesByStatus(status));
-        }
+
+        return ResponseEntity.ok(packageInformationService.findAllPackages(status));
+
     }
     @PutMapping(value = "/packages/{id}",params = {"status"})
     public ResponseEntity updatePackageStatus(@PathVariable long id, @RequestParam int status){

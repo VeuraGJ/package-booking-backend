@@ -6,8 +6,7 @@ import com.oocl.packagebooking.repository.PackageInformationRepository;
 import java.util.List;
 
 public interface PackageInformationService {
-    List<PackageInformation> findAllPackages();
-    List<PackageInformation> findAllPackagesByStatus(int status);
+    List<PackageInformation> findAllPackages(int status);
     PackageInformation updatePackageStatus(PackageInformation packageInformation);
     PackageInformation updatePackageOrderTime(PackageInformation packageInformation);
 }

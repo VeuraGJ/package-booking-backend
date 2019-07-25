@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+
 @RunWith(SpringRunner.class)
 public class PackageInformationServiceImplTest {
     @TestConfiguration
@@ -36,20 +38,21 @@ public class PackageInformationServiceImplTest {
      private PackageInformationService packageInformationService;
      @MockBean
      private PackageInformationRepository packageInformationRepository;
-    private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
      @Test
-     public void should_return_all_Packages_when_call_find_all_function(){
+     public void should_return_all_Packages(){
          List<PackageInformation> packageInformations = new ArrayList<PackageInformation>();
          packageInformations.add(
                  new PackageInformation("lajods",578687897,0,simpleDateFormat.format(new Date())));
          packageInformations.add(
                  new PackageInformation("las",578687897,0,simpleDateFormat.format(new Date())));
          Mockito.when(packageInformationRepository.findAll()).thenReturn(packageInformations);
-         List<PackageInformation> loadPackageInformations = packageInformationService.findAllPackages();
+         List<PackageInformation> loadPackageInformations = packageInformationService.findAllPackages(-1);
          Assertions.assertEquals(packageInformations,loadPackageInformations);
      }
     @Test
-    public void should_return_specific_status_Packages_when_call_find_all_by_status_function(){
+    public void should_return_specific_status_Packages(){
         List<PackageInformation> packageInformations = new ArrayList<PackageInformation>();
         packageInformations.add(new PackageInformation("lajods",578687897,0,simpleDateFormat.format(new Date())));
         packageInformations.add(new PackageInformation("las",578687897,1,simpleDateFormat.format(new Date())));
@@ -57,8 +60,8 @@ public class PackageInformationServiceImplTest {
         List<PackageInformation> exceptedPackages = packageInformations.stream()
                                                     .filter(packageInformation -> packageInformation.getStatus() ==1)
                                                     .collect(Collectors.toList());
-        Mockito.when(packageInformationRepository.findAll()).thenReturn(packageInformations);
-        List<PackageInformation> loadPackageInformations = packageInformationService.findAllPackagesByStatus(1);
+        Mockito.when(packageInformationRepository.findAllByStatus(anyInt())).thenReturn(exceptedPackages);
+        List<PackageInformation> loadPackageInformations = packageInformationService.findAllPackages(1);
         Assertions.assertEquals(exceptedPackages,loadPackageInformations);
     }
     @Test

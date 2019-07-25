@@ -13,17 +13,15 @@ import java.util.stream.Collectors;
 public class PackageInformationServiceImpl implements PackageInformationService {
     @Autowired
     private PackageInformationRepository packageInformationRepository;
-    @Override
-    public List<PackageInformation> findAllPackages() {
-        return packageInformationRepository.findAll();
-    }
+
 
     @Override
-    public List<PackageInformation> findAllPackagesByStatus(int status) {
-        return packageInformationRepository.findAll()
-                .stream()
-                .filter(packageInformation -> packageInformation.getStatus() == status)
-                .collect(Collectors.toList());
+    public List<PackageInformation> findAllPackages(int status) {
+        if(status == -1){
+            return packageInformationRepository.findAll();
+        }else{
+            return packageInformationRepository.findAllByStatus(status);
+        }
     }
 
     @Override
