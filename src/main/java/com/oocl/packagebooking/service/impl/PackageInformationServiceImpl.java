@@ -35,4 +35,15 @@ public class PackageInformationServiceImpl implements PackageInformationService 
         oldpackage.setStatus(packageInformation.getStatus());
         return packageInformationRepository.save(oldpackage);
     }
+
+    @Override
+    public PackageInformation updatePackageOrderTime(PackageInformation packageInformation) {
+        PackageInformation oldpackage = packageInformationRepository.findById(packageInformation.getId()).orElse(null);
+        if(oldpackage == null){
+            return null;
+        }
+        oldpackage.setOrderTime(packageInformation.getOrderTime());
+        return packageInformationRepository.save(oldpackage);
+    }
+
 }

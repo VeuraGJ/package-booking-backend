@@ -60,7 +60,7 @@ public class PackageInformationServiceImplTest {
         Assertions.assertEquals(exceptedPackages,loadPackageInformations);
     }
     @Test
-    public void should_return_update_status_Packages_when_call_find_all_by_status_function(){
+    public void should_return_update_status_Package_when_call_update_status_function(){
         PackageInformation packageInformation = new PackageInformation("lajods",578687897,0,simpleDateFormat.format(new Date()));
         packageInformation.setId(1);
         Mockito.when(packageInformationRepository.findById(packageInformation.getId())).thenReturn(java.util.Optional.of(packageInformation));
@@ -68,5 +68,15 @@ public class PackageInformationServiceImplTest {
         Mockito.when(packageInformationRepository.save(packageInformation)).thenReturn(packageInformation);
         PackageInformation updatePackage = packageInformationService.updatePackageStatus(packageInformation);
         Assertions.assertEquals(packageInformation.getStatus(),updatePackage.getStatus());
+    }
+    @Test
+    public void should_return_update_order_time_Package_when_call_update_orderTime_function(){
+        PackageInformation packageInformation = new PackageInformation("lajods",578687897,0,simpleDateFormat.format(new Date()));
+        packageInformation.setId(1);
+        Mockito.when(packageInformationRepository.findById(packageInformation.getId())).thenReturn(java.util.Optional.of(packageInformation));
+        packageInformation.setOrderTime("2019-06-06 10:56:00");
+        Mockito.when(packageInformationRepository.save(packageInformation)).thenReturn(packageInformation);
+        PackageInformation updatePackage = packageInformationService.updatePackageOrderTime(packageInformation);
+        Assertions.assertEquals(packageInformation.getOrderTime(),updatePackage.getOrderTime());
     }
  }
