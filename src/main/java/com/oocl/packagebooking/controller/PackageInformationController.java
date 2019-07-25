@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin("http://localhost:8081")
 public class PackageInformationController {
     @Autowired
     private PackageInformationService packageInformationService;

@@ -9,4 +9,5 @@ import java.util.List;
 
 
 public interface PackageInformationRepository extends JpaRepository<PackageInformation,Long> {
+    List<PackageInformation> findAllByStatus(int status);
 }

@@ -40,8 +40,10 @@ public class PackageInformationServiceImplTest {
      @Test
      public void should_return_all_Packages_when_call_find_all_function(){
          List<PackageInformation> packageInformations = new ArrayList<PackageInformation>();
-         packageInformations.add(new PackageInformation("lajods",578687897,0,simpleDateFormat.format(new Date())));
-         packageInformations.add(new PackageInformation("las",578687897,0,simpleDateFormat.format(new Date())));
+         packageInformations.add(
+                 new PackageInformation("lajods",578687897,0,simpleDateFormat.format(new Date())));
+         packageInformations.add(
+                 new PackageInformation("las",578687897,0,simpleDateFormat.format(new Date())));
          Mockito.when(packageInformationRepository.findAll()).thenReturn(packageInformations);
          List<PackageInformation> loadPackageInformations = packageInformationService.findAllPackages();
          Assertions.assertEquals(packageInformations,loadPackageInformations);
