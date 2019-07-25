@@ -17,6 +17,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(PackageInformationController.class)
@@ -26,11 +29,13 @@ public class PackageInformationControllerTest {
    @MockBean
     private PackageInformationService packageInformationService;
    @Test
-    public void should_return_all_packages_when_call_get_api(){
+    public void should_return_all_packages_when_call_get_api() throws Exception {
        List<PackageInformation> packageInformations = new ArrayList<PackageInformation>();
        packageInformations.add(new PackageInformation("lajods",578687897,0,new Date()));
        packageInformations.add(new PackageInformation("las",578687897,0,new Date()));
        given(packageInformationService.findAllPackages()).willReturn(packageInformations);
-
+       mockMvc.perform(get("/packages"))
+               .andExpect(status().isOk())
+               .andExpect(jsonPath("$.length()").value(2));
    }
 }

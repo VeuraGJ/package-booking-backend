@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PackageInformationController {
     @Autowired
-    private PackageInformationServiceImpl packageInformationService;
+    private PackageInformationService packageInformationService;
     @GetMapping("/packages")
     public ResponseEntity getAllPackages(){
         return ResponseEntity.ok(packageInformationService.findAllPackages());
