@@ -57,4 +57,14 @@ public class PackageInformationServiceImplTest {
         List<PackageInformation> loadPackageInformations = packageInformationService.findAllPackagesByStatus(1);
         Assertions.assertEquals(exceptedPackages,loadPackageInformations);
     }
+    @Test
+    public void should_return_update_status_Packages_when_call_find_all_by_status_function(){
+        PackageInformation packageInformation = new PackageInformation("lajods",578687897,0,new Date());
+        packageInformation.setId(1);
+        Mockito.when(packageInformationRepository.findById(packageInformation.getId())).thenReturn(java.util.Optional.of(packageInformation));
+        packageInformation.setStatus(1);
+        Mockito.when(packageInformationRepository.save(packageInformation)).thenReturn(packageInformation);
+        PackageInformation updatePackage = packageInformationService.updatePackageStatus(packageInformation);
+        Assertions.assertEquals(packageInformation.getStatus(),updatePackage.getStatus());
+    }
  }

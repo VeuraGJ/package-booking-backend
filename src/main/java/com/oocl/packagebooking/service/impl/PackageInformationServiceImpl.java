@@ -25,4 +25,14 @@ public class PackageInformationServiceImpl implements PackageInformationService 
                 .filter(packageInformation -> packageInformation.getStatus() == status)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public PackageInformation updatePackageStatus(PackageInformation packageInformation) {
+        PackageInformation oldpackage = packageInformationRepository.findById(packageInformation.getId()).orElse(null);
+        if(oldpackage == null){
+            return null;
+        }
+        oldpackage.setStatus(packageInformation.getStatus());
+        return packageInformationRepository.save(oldpackage);
+    }
 }
