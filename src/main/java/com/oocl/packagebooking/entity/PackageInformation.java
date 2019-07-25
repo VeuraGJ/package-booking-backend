@@ -6,7 +6,7 @@ import java.util.Date;
 @Entity
 public class PackageInformation {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String cutomerName;
     private long telphoneNumber;

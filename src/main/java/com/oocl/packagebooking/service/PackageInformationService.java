@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface PackageInformationService {
     List<PackageInformation> findAllPackages();
+    List<PackageInformation> findAllPackagesByStatus(int status);
 }
